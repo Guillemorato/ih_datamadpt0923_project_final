@@ -3,35 +3,15 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Cargar los datos
-df = pd.read_csv("./data/merged_df.csv")  # Reemplaza "tu_archivo.csv" con el nombre de tu archivo CSV
+# Cargar tus datos
+data = pd.read_csv("tu_archivo.csv")
 
-# Interfaz de usuario con Streamlit
-st.title("Métricas")
+# Crear el gráfico utilizando seaborn
+sns.barplot(x="Columna_X", y="Columna_Y", data=data)
 
-# Seleccionar jugador
-jugador = st.multiselect("Selecciona un jugador:", df['Jugador'].unique(),[1])
+# Ajustar el formato de los ticks del eje x
+plt.xticks(rotation=45)  # Rotar las etiquetas para mejor legibilidad
+plt.gca().xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: int(x)))  # Formatear los ticks como enteros
 
-# Seleccionar columna
-columnas_disponibles = ['Errores No Forzados', 'Winners', 'Puntos Ganados de Remate',
-                        '% Primeros Saques', '% Segundos Saques',
-                        '% Puntos Ganados con Primeros Saques', '% Puntos Ganados con Segundos Saques',
-                        'Dobles Faltas', 'Km Recorridos', 'Puntos de Break', 'Puntos de Oro',
-                        'Errores No Forzados de Fondo de Pista', 'Errores No Forzados en Red',
-                        '% de Restos Fallados']
-columna_seleccionada = st.selectbox("Selecciona una columna:", columnas_disponibles)
-
-# Filtrar datos del jugador seleccionado
-if st.button('Mostrar'):
-    print("---------")
-    print(jugador)
-    datos_jugador = df[df['Jugador'].isin(jugador)]
-    # Crear la visualización
-    plt.figure(figsize=(10, 6))
-    sns.lineplot(data=datos_jugador, x='Partido', y=columna_seleccionada)
-    plt.title(f"{columna_seleccionada} para {jugador}")
-    plt.xlabel("Partido")
-    plt.ylabel(columna_seleccionada)
-    st.pyplot(plt)
-
-
+# Mostrar el gráfico en Streamlit
+st.pyplot()

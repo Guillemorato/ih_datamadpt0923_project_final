@@ -33,7 +33,8 @@ if st.button('Mostrar'):
     # Crear la visualización
     # Crear la visualización
     plt.figure(figsize=(10, 6))
-    sns.lineplot(data=datos_jugador, x='Partido', y=columna_seleccionada, hue="Jugador")
+    sns.lineplot(data=datos_jugador, x='Partido', y=columna_seleccionada, hue="Jugador", ci=None)
+    plt.xticks(range(1,21))
     plt.title(f"{columna_seleccionada} para {jugador}")
     plt.xlabel("Partido")
     plt.ylabel(columna_seleccionada)

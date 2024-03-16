@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator  # Import MaxNLocator
-
 
 # Cargar los datos
 df = pd.read_csv("./data/merged_df.csv")  # Reemplaza "tu_archivo.csv" con el nombre de tu archivo CSV
@@ -30,23 +28,13 @@ if st.button('Mostrar'):
     print("---------")
     print(jugador)
     datos_jugador = df[df['Jugador'].isin(jugador)]
-    
     print("----datos_jugador-----")
     print(datos_jugador)
-
+    # Crear la visualización
     # Crear la visualización
     plt.figure(figsize=(10, 6))
-    sns.lineplot(data=datos_jugador, x='Partido', y=columna_seleccionada, hue="Jugador")
-
-    # Get the current axes object
-    ax = plt.gca()
-
-    # Set major locator to integers for the y-axis
-    ax.yaxis.set_major_locator(MaxNLocator(integer=True))
-
-    # Set major locator to integers for the x-axis
-    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
-
+    sns.lineplot(data=datos_jugador, x='Partido', y=columna_seleccionada, hue="Jugador", ci=None)
+    plt.xticks(range(1,21))
     plt.title(f"{columna_seleccionada} para {jugador}")
     plt.xlabel("Partido")
     plt.ylabel(columna_seleccionada)
